@@ -157,6 +157,12 @@ function Form( {path} ){
     console.log(selectedOptions)
   }
 
+    function formHandling(question){
+    console.log(question.target.name, question.target.value)
+    setSelectedOptions({...selectedOptions, [question.target.name]:question.target.value})
+  }
+
+            // tracker={(selectedValue) => handleOptionChange(question.N, selectedValue)}
  return (
     <>
       <form onSubmit={submit}>
@@ -164,7 +170,7 @@ function Form( {path} ){
           <Item
             key={question.N}
             path={question}
-            tracker={(selectedValue) => handleOptionChange(question.N, selectedValue)}
+            tracker={formHandling}
           />
         ))}
         <button type="submit">Submit</button>
