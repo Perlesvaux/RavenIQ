@@ -14,6 +14,18 @@ const S = [
   {N:"A1", Q:"./Q/A1.png", A:"4", O:[{index:1, sprite:"./O/A1_1.png"},{index:2, sprite:"./O/A1_2.png"},{index:3, sprite:"./O/A1_3.png"},{index:4, sprite:"./O/A1_4.png"},{index:5, sprite:"./O/A1_5.png"},{index:6, sprite:"./O/A1_6.png"}]},
   {N:"A2", Q:"./Q/A2.png", A:"5", O:[{index:1, sprite:"./O/A2_1.png"},{index:2, sprite:"./O/A2_2.png"},{index:3, sprite:"./O/A2_3.png"},{index:4, sprite:"./O/A2_4.png"},{index:5, sprite:"./O/A2_5.png"},{index:6, sprite:"./O/A2_6.png"}]},
   {N:"A3", Q:"./Q/A3.png", A:"1", O:[{index:1, sprite:"./O/A3_1.png"},{index:2, sprite:"./O/A3_2.png"},{index:3, sprite:"./O/A3_3.png"},{index:4, sprite:"./O/A3_4.png"},{index:5, sprite:"./O/A3_5.png"},{index:6, sprite:"./O/A3_6.png"}]},
+
+  {N:"A4", Q:"./Q/A4.png", A:"2", O:[{index:1, sprite:"./O/A4_1.png"},{index:2, sprite:"./O/A4_2.png"},{index:3, sprite:"./O/A4_3.png"},{index:4, sprite:"./O/A4_4.png"},{index:5, sprite:"./O/A4_5.png"},{index:6, sprite:"./O/A4_6.png"}]},
+  {N:"A5", Q:"./Q/A5.png", A:"6", O:[{index:1, sprite:"./O/A5_1.png"},{index:2, sprite:"./O/A5_2.png"},{index:3, sprite:"./O/A5_3.png"},{index:4, sprite:"./O/A5_4.png"},{index:5, sprite:"./O/A5_5.png"},{index:6, sprite:"./O/A5_6.png"}]},
+  {N:"A6", Q:"./Q/A6.png", A:"3", O:[{index:1, sprite:"./O/A6_1.png"},{index:2, sprite:"./O/A6_2.png"},{index:3, sprite:"./O/A6_3.png"},{index:4, sprite:"./O/A6_4.png"},{index:5, sprite:"./O/A6_5.png"},{index:6, sprite:"./O/A6_6.png"}]},
+
+  {N:"A7", Q:"./Q/A7.png", A:"6", O:[{index:1, sprite:"./O/A7_1.png"},{index:2, sprite:"./O/A7_2.png"},{index:3, sprite:"./O/A7_3.png"},{index:4, sprite:"./O/A7_4.png"},{index:5, sprite:"./O/A7_5.png"},{index:6, sprite:"./O/A7_6.png"}]},
+  {N:"A8", Q:"./Q/A8.png", A:"2", O:[{index:1, sprite:"./O/A8_1.png"},{index:2, sprite:"./O/A8_2.png"},{index:3, sprite:"./O/A8_3.png"},{index:4, sprite:"./O/A8_4.png"},{index:5, sprite:"./O/A8_5.png"},{index:6, sprite:"./O/A8_6.png"}]},
+  {N:"A9", Q:"./Q/A9.png", A:"1", O:[{index:1, sprite:"./O/A9_1.png"},{index:2, sprite:"./O/A9_2.png"},{index:3, sprite:"./O/A9_3.png"},{index:4, sprite:"./O/A9_4.png"},{index:5, sprite:"./O/A9_5.png"},{index:6, sprite:"./O/A9_6.png"}]},
+
+  {N:"A10", Q:"./Q/A10.png", A:"3", O:[{index:1, sprite:"./O/A10_1.png"},{index:2, sprite:"./O/A10_2.png"},{index:3, sprite:"./O/A10_3.png"},{index:4, sprite:"./O/A10_4.png"},{index:5, sprite:"./O/A10_5.png"},{index:6, sprite:"./O/A10_6.png"}]},
+  {N:"A11", Q:"./Q/A11.png", A:"5", O:[{index:1, sprite:"./O/A11_1.png"},{index:2, sprite:"./O/A11_2.png"},{index:3, sprite:"./O/A11_3.png"},{index:4, sprite:"./O/A11_4.png"},{index:5, sprite:"./O/A11_5.png"},{index:6, sprite:"./O/A11_6.png"}]},
+  {N:"A12", Q:"./Q/A12.png", A:"4", O:[{index:1, sprite:"./O/A12_1.png"},{index:2, sprite:"./O/A12_2.png"},{index:3, sprite:"./O/A12_3.png"},{index:4, sprite:"./O/A12_4.png"},{index:5, sprite:"./O/A12_5.png"},{index:6, sprite:"./O/A12_6.png"}]},
 ]
 
 function Item({ path, tracker }){
