@@ -5,11 +5,12 @@ import React, {
   useState,
   createContext,
   useContext,
-  useEffect
+  useEffect,
+  useRef
 } from "https://esm.sh/react?dev";
 import { createRoot } from "https://esm.sh/react-dom/client?dev";
 
-
+//Globally maps each item to its respective: Name, Question, Answer and Options (each option with its own index and sprite)
 const S = [
   {N:"A1", Q:"./Q/A1.png", A:"4", O:[{index:1, sprite:"./O/A1_1.png"},{index:2, sprite:"./O/A1_2.png"},{index:3, sprite:"./O/A1_3.png"},{index:4, sprite:"./O/A1_4.png"},{index:5, sprite:"./O/A1_5.png"},{index:6, sprite:"./O/A1_6.png"}]},
   {N:"A2", Q:"./Q/A2.png", A:"5", O:[{index:1, sprite:"./O/A2_1.png"},{index:2, sprite:"./O/A2_2.png"},{index:3, sprite:"./O/A2_3.png"},{index:4, sprite:"./O/A2_4.png"},{index:5, sprite:"./O/A2_5.png"},{index:6, sprite:"./O/A2_6.png"}]},
@@ -24,7 +25,6 @@ const S = [
   {N:"A11", Q:"./Q/A11.png", A:"5", O:[{index:1, sprite:"./O/A11_1.png"},{index:2, sprite:"./O/A11_2.png"},{index:3, sprite:"./O/A11_3.png"},{index:4, sprite:"./O/A11_4.png"},{index:5, sprite:"./O/A11_5.png"},{index:6, sprite:"./O/A11_6.png"}]},
   {N:"A12", Q:"./Q/A12.png", A:"4", O:[{index:1, sprite:"./O/A12_1.png"},{index:2, sprite:"./O/A12_2.png"},{index:3, sprite:"./O/A12_3.png"},{index:4, sprite:"./O/A12_4.png"},{index:5, sprite:"./O/A12_5.png"},{index:6, sprite:"./O/A12_6.png"}]},
 
-
   {N:"B1", Q:"./Q/B1.png", A:"2", O:[{index:1, sprite:"./O/B1_1.png"},{index:2, sprite:"./O/B1_2.png"},{index:3, sprite:"./O/B1_3.png"},{index:4, sprite:"./O/B1_4.png"},{index:5, sprite:"./O/B1_5.png"},{index:6, sprite:"./O/B1_6.png"}]},
   {N:"B2", Q:"./Q/B2.png", A:"6", O:[{index:1, sprite:"./O/B2_1.png"},{index:2, sprite:"./O/B2_2.png"},{index:3, sprite:"./O/B2_3.png"},{index:4, sprite:"./O/B2_4.png"},{index:5, sprite:"./O/B2_5.png"},{index:6, sprite:"./O/B2_6.png"}]},
   {N:"B3", Q:"./Q/B3.png", A:"1", O:[{index:1, sprite:"./O/B3_1.png"},{index:2, sprite:"./O/B3_2.png"},{index:3, sprite:"./O/B3_3.png"},{index:4, sprite:"./O/B3_4.png"},{index:5, sprite:"./O/B3_5.png"},{index:6, sprite:"./O/B3_6.png"}]},
@@ -37,7 +37,6 @@ const S = [
   {N:"B10", Q:"./Q/B10.png", A:"3", O:[{index:1, sprite:"./O/B10_1.png"},{index:2, sprite:"./O/B10_2.png"},{index:3, sprite:"./O/B10_3.png"},{index:4, sprite:"./O/B10_4.png"},{index:5, sprite:"./O/B10_5.png"},{index:6, sprite:"./O/B10_6.png"}]},
   {N:"B11", Q:"./Q/B11.png", A:"4", O:[{index:1, sprite:"./O/B11_1.png"},{index:2, sprite:"./O/B11_2.png"},{index:3, sprite:"./O/B11_3.png"},{index:4, sprite:"./O/B11_4.png"},{index:5, sprite:"./O/B11_5.png"},{index:6, sprite:"./O/B11_6.png"}]},
   {N:"B12", Q:"./Q/B12.png", A:"5", O:[{index:1, sprite:"./O/B12_1.png"},{index:2, sprite:"./O/B12_2.png"},{index:3, sprite:"./O/B12_3.png"},{index:4, sprite:"./O/B12_4.png"},{index:5, sprite:"./O/B12_5.png"},{index:6, sprite:"./O/B12_6.png"}]},
-
 
   {N:"C1", Q:"./Q/C1.png", A:"8", O:[{index:1, sprite:"./O/C1_1.png"},{index:2, sprite:"./O/C1_2.png"},{index:3, sprite:"./O/C1_3.png"},{index:4, sprite:"./O/C1_4.png"},{index:5, sprite:"./O/C1_5.png"},{index:6, sprite:"./O/C1_6.png"}, {index:7, sprite:"./O/C1_7.png"}, {index:8, sprite:"./O/C1_8.png"}]},
   {N:"C2", Q:"./Q/C2.png", A:"2", O:[{index:1, sprite:"./O/C2_1.png"},{index:2, sprite:"./O/C2_2.png"},{index:3, sprite:"./O/C2_3.png"},{index:4, sprite:"./O/C2_4.png"},{index:5, sprite:"./O/C2_5.png"},{index:6, sprite:"./O/C2_6.png"}, {index:7, sprite:"./O/C2_7.png"}, {index:8, sprite:"./O/C2_8.png"}]},
@@ -77,68 +76,97 @@ const S = [
   {N:"E10", Q:"./Q/E10.png", A:"6", O:[{index:1, sprite:"./O/E10_1.png"},{index:2, sprite:"./O/E10_2.png"},{index:3, sprite:"./O/E10_3.png"},{index:4, sprite:"./O/E10_4.png"},{index:5, sprite:"./O/E10_5.png"},{index:6, sprite:"./O/E10_6.png"}, {index:7, sprite:"./O/E10_7.png"}, {index:8, sprite:"./O/E10_8.png"}]},
   {N:"E11", Q:"./Q/E11.png", A:"3", O:[{index:1, sprite:"./O/E11_1.png"},{index:2, sprite:"./O/E11_2.png"},{index:3, sprite:"./O/E11_3.png"},{index:4, sprite:"./O/E11_4.png"},{index:5, sprite:"./O/E11_5.png"},{index:6, sprite:"./O/E11_6.png"}, {index:7, sprite:"./O/E11_7.png"}, {index:8, sprite:"./O/E11_8.png"}]},
   {N:"E12", Q:"./Q/E12.png", A:"5", O:[{index:1, sprite:"./O/E12_1.png"},{index:2, sprite:"./O/E12_2.png"},{index:3, sprite:"./O/E12_3.png"},{index:4, sprite:"./O/E12_4.png"},{index:5, sprite:"./O/E12_5.png"},{index:6, sprite:"./O/E12_6.png"}, {index:7, sprite:"./O/E12_7.png"}, {index:8, sprite:"./O/E12_8.png"}]},
-
 ]
 
-function Item({ path, tracker, isAnswered}){
+function Item({ source, selecting, userResponse}){
 
   const grid_container = {display: "grid", gridTemplateColumns: "auto auto auto", padding: "10px"}
   const option_image = {width:"8em", height:"5em"}
   const card_body = {width: "100%"}
-  const card = {width:"30em", heigth:"10em"}
+  const card = {width:"30em", heigth:"10em", margin:"1em"}
   const card_image = {width:"22em", heigth:"10em", margin:"auto"}
-  const card_header = {ok:{backgroundColor:"lightgreen"},pending:{backgroundColor:"pink"}}
+  const card_header = {ok:{backgroundColor:"lightgreen", height:"3em"},pending:{backgroundColor:"pink", height:"3em"}}
 
-  // let [isAnswered, setAnswer] = useState(false)
-
-  // function respond(formSelection){
-  //   tracker(formSelection)
-  //   setAnswer(true)
-  // }
-
-     // {(isAnswered[path.N] != null ? <h1>ok</h1> : <h1>not responded</h1>)} 
   return(
     <>
-      
       <div className="card" style={card}>
-
-        <div className="card-header" style={isAnswered[path.N]? card_header.ok : card_header.pending} ></div>
-
-      <img src={path.Q}  className="card-img-top" style={card_image}/>
-
-          <div className="card-body" style={card_body}>
-
-            <div style={grid_container}>
-            {
-              path.O.map((option)=> 
-                <ul key={`opt-${path.N}-${option.index}`} className="list-group list-group-flush">
-                  <input type="radio" name={path.N} id={`opt-${path.N}-${option.index}`} value={option.index} onChange={tracker} />
-                  <label htmlFor={`opt-${path.N}-${option.index}`}><img style={option_image} src={option.sprite} /> </label>
-                </ul>)
-            }
-            </div>
-
+        <div className="card-header" style={userResponse[source.N]? card_header.ok : card_header.pending} ></div>
+        <img src={source.Q}  className="card-img-top" style={card_image}/>
+        <div className="card-body" style={card_body}>
+          <div style={grid_container}>
+          {
+            source.O.map((option)=> 
+              <ul key={`opt-${source.N}-${option.index}`} className="list-group list-group-flush">
+                <input type="radio" name={source.N} id={`opt-${source.N}-${option.index}`} value={option.index} onChange={selecting} />
+                <label htmlFor={`opt-${source.N}-${option.index}`}><img style={option_image} src={option.sprite} /> </label>
+              </ul>)
+          }
+          </div>
+        </div>
       </div>
-      </div>
-
     </>
-    
   )
 }
 
 
 
+const CountdownTimer = ({ initialSeconds, timeout}) => {
+const [seconds, setSeconds] = useState(initialSeconds);
 
-function Form( {path} ){
+useEffect(() => {
+  // Exit early if countdown is finished
+  if (seconds <= 0) {
+      timeout()
+  return;
+  }
 
-  const [selectedOptions, setSelectedOptions] = useState({});
-  const [score, setScore] = useState(0);
+  // Set up the timer
+  const timer = setInterval(() => {
+  setSeconds((prevSeconds) => prevSeconds - 1);
+  }, 1000);
+
+  // Clean up the timer
+  return () => clearInterval(timer);
+}, [seconds]);
+
+// Format the remaining time (e.g., “00:05:10” for 5 minutes and 10 seconds)
+const formatTime = (timeInSeconds) => {
+  const minutes = Math.floor(timeInSeconds / 60)
+  .toString()
+  .padStart(2, `0`);
+  const seconds = (timeInSeconds % 60).toString().padStart(2, `0`);
+  return `${minutes}:${seconds}`;
+};
+
+return (
+<div>
+<h1>Countdown Timer</h1>
+<p>{formatTime(seconds)}</p>
+</div>
+);
+};
+
+
+
+
+function Form( {source} ){
+  
+  const grid_container = {display:"flex", flexWrap:"wrap", }
+
+  const [selectedOptions, setSelectedOptions] = useState({proceed: false, score:0, timer:60});
+  const confirm = useRef()
+  // const [timer, setTimer] = useState(10)
+
+  function fakeClick(){
+    confirm.current.click();
+    console.log(confirm)
+  }
 
   function submit(e){
     e.preventDefault();
 
     let total = 0;
-    for(let each of path){
+    for(let each of source){
       const correctAnswer  = each.A;
       const selectedAnswer = selectedOptions[each.N];
       if (selectedAnswer === correctAnswer){
@@ -146,27 +174,7 @@ function Form( {path} ){
       }
     }
 
-    setScore(total)
-
-    // path.forEach(question => {
-    //   const correctAnswer = question.A;
-    //   const selectedAnswer = selectedOptions[question.N];
-    //   //Evaluation!
-    //   if (selectedAnswer === correctAnswer) {
-    //     setScore(score + 1);
-    //   }
-    // });
-
-    // Reset selectedOptions after evaluation
-    // setSelectedOptions({});
-
-
-  }
-
-    function handleOptionChange(questionName, selectedValue) {
-    console.log(questionName, selectedValue.target.value)
-    setSelectedOptions({...selectedOptions, [questionName]: selectedValue.target.value});
-    console.log(selectedOptions)
+    setSelectedOptions({...selectedOptions, score:total})
   }
 
     function formHandling(question){
@@ -174,21 +182,40 @@ function Form( {path} ){
     setSelectedOptions({...selectedOptions, [question.target.name]:question.target.value})
   }
 
-            // tracker={(selectedValue) => handleOptionChange(question.N, selectedValue)}
+  function toggleWarning(){
+    setSelectedOptions({...selectedOptions, proceed:!selectedOptions.proceed})
+  }
+
+
  return (
     <>
       <form onSubmit={submit}>
-        {path.map((question) => (
+
+        <div style={grid_container}>
+        {source.map((question) => (
           <Item
             key={question.N}
-            path={question}
-            tracker={formHandling}
-            isAnswered={selectedOptions}
+            source={question}
+            selecting={formHandling}
+            userResponse={selectedOptions}
           />
         ))}
-        <button type="submit">Submit</button>
-        <p>Score: {score}</p>
+        </div>
+
+        {selectedOptions.proceed?
+          <>
+          <h1>Are you sure you wanna proceed?</h1>
+
+        <button type="submit">Yes</button>
+        <button onClick={toggleWarning}>No</button>
+        </>
+          : <button onClick={toggleWarning}>Submit</button>}
+        <p>Score: {selectedOptions.score}</p>
+
+        <button type="submit"  ref={confirm} style={{display:"none"}}>alt</button>
       </form>
+
+      <CountdownTimer initialSeconds={5} timeout={fakeClick}  />
     </>
   );}
 
@@ -197,10 +224,20 @@ function Form( {path} ){
 
 
 function App() {
-//Component logic goes here
-return (<>
+  const [isReady, setReady] = useState(false)
+  function toggling(){
+    setReady(!isReady)
+  }
 
-  <Form path={S} />
+return (
+  <>
+    {isReady?
+      <Form source={S} />:
+      <>
+        <h1>Test will begin. Instructions:...</h1>
+        <button onClick={setReady}>Begin Test</button>
+      </>}
+
 
 
   </>)}
