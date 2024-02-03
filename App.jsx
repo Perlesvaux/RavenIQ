@@ -83,7 +83,7 @@ function Item({ source, selecting, userResponse}){
   const grid_container = {display: "grid", gridTemplateColumns: "auto auto auto", padding: "10px"}
   const option_image = {width:"8em", height:"5em"}
   const card_body = {width: "100%"}
-  const card = {width:"30em", heigth:"10em", margin:"1em"}
+  const card = {width:"26em", heigth:"10em", margin:"1em", minWidth:"27em"}
   const card_image = {width:"22em", heigth:"10em", margin:"auto"}
   const card_header = {ok:{backgroundColor:"lightgreen", height:"3em"},pending:{backgroundColor:"pink", height:"3em"}}
 
@@ -110,15 +110,19 @@ function Item({ source, selecting, userResponse}){
 
 
 
-const CountdownTimer = ({ initialSeconds, timeout}) => {
+const CountdownTimer = ({ initialSeconds, timeout, waitFor}) => {
 const [seconds, setSeconds] = useState(initialSeconds);
 
 useEffect(() => {
   // Exit early if countdown is finished
   if (seconds <= 0) {
       timeout()
+      console.log(waitFor)
+      
   return;
   }
+
+  if (waitFor) return;
 
   // Set up the timer
   const timer = setInterval(() => {
@@ -138,11 +142,12 @@ const formatTime = (timeInSeconds) => {
   return `${minutes}:${seconds}`;
 };
 
+const sticky = { position: "sticky", top: "20px"}
+
 return (
-<div>
-<h1>Countdown Timer</h1>
-<p>{formatTime(seconds)}</p>
-</div>
+    <>
+      <p>{formatTime(seconds)}</p>
+    </>
 );
 };
 
@@ -153,13 +158,12 @@ function Form( {source} ){
   
   const grid_container = {display:"flex", flexWrap:"wrap", }
 
-  const [selectedOptions, setSelectedOptions] = useState({proceed: false, score:0, timer:60});
+  const [selectedOptions, setSelectedOptions] = useState({proceed: false, score:0, completed:false});
   const confirm = useRef()
   // const [timer, setTimer] = useState(10)
 
-  function fakeClick(){
+  function submitForm(){
     confirm.current.click();
-    console.log(confirm)
   }
 
   function submit(e){
@@ -174,7 +178,7 @@ function Form( {source} ){
       }
     }
 
-    setSelectedOptions({...selectedOptions, score:total})
+    setSelectedOptions({...selectedOptions, score:total, completed:true })
   }
 
     function formHandling(question){
@@ -189,9 +193,30 @@ function Form( {source} ){
 
  return (
     <>
-      <form onSubmit={submit}>
+      <nav className="navbar fixed-top navbar-light bg-light" style={{height:"40px"}}>
 
-        <div style={grid_container}>
+        <CountdownTimer initialSeconds={10} timeout={submitForm} waitFor={selectedOptions.completed}  />
+
+        {selectedOptions.completed? <>ok</> :
+          <>
+          
+          {selectedOptions.proceed? 
+              <>
+                <p>Are you sure?</p>
+                <button onClick={submitForm}>Yes!</button> 
+                <button onClick={toggleWarning}>Not yet</button>
+              </>
+                : 
+                <button onClick={toggleWarning}>Complete Quiz!</button>}
+
+
+          </>}
+        <p>Score: {selectedOptions.score}</p>
+      </nav>
+
+      <form onSubmit={submit} style={{padding:"30px"}}>
+
+        <div style={{display: "flex", flexWrap:"wrap", padding: "10px"}}>
         {source.map((question) => (
           <Item
             key={question.N}
@@ -202,20 +227,9 @@ function Form( {source} ){
         ))}
         </div>
 
-        {selectedOptions.proceed?
-          <>
-          <h1>Are you sure you wanna proceed?</h1>
-
-        <button type="submit">Yes</button>
-        <button onClick={toggleWarning}>No</button>
-        </>
-          : <button onClick={toggleWarning}>Submit</button>}
-        <p>Score: {selectedOptions.score}</p>
-
         <button type="submit"  ref={confirm} style={{display:"none"}}>alt</button>
       </form>
 
-      <CountdownTimer initialSeconds={5} timeout={fakeClick}  />
     </>
   );}
 
