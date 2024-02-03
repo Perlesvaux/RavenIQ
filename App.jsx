@@ -78,14 +78,18 @@ const S = [
   {N:"E12", Q:"./Q/E12.png", A:"5", O:[{index:1, sprite:"./O/E12_1.png"},{index:2, sprite:"./O/E12_2.png"},{index:3, sprite:"./O/E12_3.png"},{index:4, sprite:"./O/E12_4.png"},{index:5, sprite:"./O/E12_5.png"},{index:6, sprite:"./O/E12_6.png"}, {index:7, sprite:"./O/E12_7.png"}, {index:8, sprite:"./O/E12_8.png"}]},
 ]
 
-function Item({ source, selecting, userResponse}){
+//Styles
+const grid_container = {display: "grid", gridTemplateColumns: "auto auto auto", padding: "10px"}
+const option_image = {width:"8em", height:"5em"}
+const card_body = {width: "100%"}
+const card = {width:"26em", heigth:"10em", margin:"1em", minWidth:"27em"}
+const card_image = {width:"22em", heigth:"10em", margin:"auto"}
+const card_header = {ok:{backgroundColor:"lightgreen", height:"3em"},pending:{backgroundColor:"pink", height:"3em"}}
+const flex_box = {display: "flex", flexWrap:"wrap", padding: "10px"}
 
-  const grid_container = {display: "grid", gridTemplateColumns: "auto auto auto", padding: "10px"}
-  const option_image = {width:"8em", height:"5em"}
-  const card_body = {width: "100%"}
-  const card = {width:"26em", heigth:"10em", margin:"1em", minWidth:"27em"}
-  const card_image = {width:"22em", heigth:"10em", margin:"auto"}
-  const card_header = {ok:{backgroundColor:"lightgreen", height:"3em"},pending:{backgroundColor:"pink", height:"3em"}}
+
+
+function Item({ source, selecting, userResponse}){
 
   return(
     <>
@@ -146,7 +150,7 @@ const sticky = { position: "sticky", top: "20px"}
 
 return (
     <>
-      <p>{formatTime(seconds)}</p>
+      <p className="navbar-brand">{formatTime(seconds)}</p>
     </>
 );
 };
@@ -193,30 +197,10 @@ function Form( {source} ){
 
  return (
     <>
-      <nav className="navbar fixed-top navbar-light bg-light" style={{height:"40px"}}>
 
-        <CountdownTimer initialSeconds={10} timeout={submitForm} waitFor={selectedOptions.completed}  />
+      <form onSubmit={submit} >
 
-        {selectedOptions.completed? <>ok</> :
-          <>
-          
-          {selectedOptions.proceed? 
-              <>
-                <p>Are you sure?</p>
-                <button onClick={submitForm}>Yes!</button> 
-                <button onClick={toggleWarning}>Not yet</button>
-              </>
-                : 
-                <button onClick={toggleWarning}>Complete Quiz!</button>}
-
-
-          </>}
-        <p>Score: {selectedOptions.score}</p>
-      </nav>
-
-      <form onSubmit={submit} style={{padding:"30px"}}>
-
-        <div style={{display: "flex", flexWrap:"wrap", padding: "10px"}}>
+        <div style={flex_box}>
         {source.map((question) => (
           <Item
             key={question.N}
@@ -230,6 +214,33 @@ function Form( {source} ){
         <button type="submit"  ref={confirm} style={{display:"none"}}>alt</button>
       </form>
 
+      <nav className="navbar fixed-bottom navbar-dark bg-dark" style={{height:"4em"}}>
+
+
+        <div className="d-flex justify-content-evenly w-100">
+        <div className="navbar-item">  
+          <CountdownTimer initialSeconds={10} timeout={submitForm} waitFor={selectedOptions.completed}  />
+        </div>
+
+        <div className="navbar-item" style={flex_box}>  
+        {selectedOptions.completed? <>ok</> :
+          <>
+          
+          {selectedOptions.proceed? 
+              <>
+                <button className="btn btn-success" onClick={submitForm}>Confirm submission</button> 
+                <button className="btn btn-danger" onClick={toggleWarning}>Not yet</button>
+              </>
+                : 
+                <button className="btn btn-primary" onClick={toggleWarning}>Complete Quiz!</button>}
+
+
+          </>}
+        </div>
+
+          <p className="navbar-item text-white navbar-brand"> Score: {selectedOptions.score}</p>
+          </div>
+      </nav>
     </>
   );}
 
@@ -249,7 +260,7 @@ return (
       <Form source={S} />:
       <>
         <h1>Test will begin. Instructions:...</h1>
-        <button onClick={setReady}>Begin Test</button>
+        <button onClick={toggling}>Begin Test</button>
       </>}
 
 
