@@ -158,9 +158,8 @@ return (
 
 
 
-function Form( {source} ){
+function Form( {source, age} ){
   
-  const grid_container = {display:"flex", flexWrap:"wrap", }
 
   const [selectedOptions, setSelectedOptions] = useState({proceed: false, score:0, completed:false});
   const confirm = useRef()
@@ -238,7 +237,7 @@ function Form( {source} ){
           </>}
         </div>
 
-          <p className="navbar-item text-white navbar-brand"> Score: {selectedOptions.score}</p>
+          <p className="navbar-item text-white navbar-brand"> Score: {selectedOptions.score} Age: {age}</p>
           </div>
       </nav>
     </>
@@ -249,18 +248,27 @@ function Form( {source} ){
 
 
 function App() {
-  const [isReady, setReady] = useState(false)
+  const [initial, setInitials] = useState({isReady:false, age:0})
   function toggling(){
-    setReady(!isReady)
+    if (initial.age > 0) setInitials({...initial, isReady:!initial.isReady})
+  }
+  function setAge(e){
+    console.log(e.target.value)
+    e.preventDefault()
+    setInitials({...initial, age:e.target.value})
   }
 
 return (
   <>
-    {isReady?
-      <Form source={S} />:
+    {initial.isReady?
+      <Form source={S} age={initial.age} />:
       <>
         <h1>Test will begin. Instructions:...</h1>
-        <button onClick={toggling}>Begin Test</button>
+        <form>
+        <button  type="submit" onClick={toggling}>Begin Test</button>
+          <input type="number" onChange={setAge} required/>
+        </form>
+
       </>}
 
 
