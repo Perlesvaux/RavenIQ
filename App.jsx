@@ -161,7 +161,7 @@ return (
 function Form( {source, age} ){
   
 
-  const [selectedOptions, setSelectedOptions] = useState({proceed: false, score:0, completed:false});
+  const [selectedOptions, setSelectedOptions] = useState({proceed: false, score:0, completed:false, results: {diag:"pending", rank:"pending"}});
   const confirm = useRef()
   // const [timer, setTimer] = useState(10)
   function percentile(total, age){
@@ -178,25 +178,96 @@ function Form( {source, age} ){
     //   ]}
     // ]
     const age_score = [
+      //Ages 1-12
       {age_group: (x)=> x <= 12, scores:[
-        {perc:1,   rang: (x)=> x            <= 14},
-        {perc:10,  rang: (x)=> x >  14 && x <= 24},
-        {perc:25,  rang: (x)=> x >  24 && x <= 33},
-        {perc:50,  rang: (x)=> x >  33 && x <= 39},
-        {perc:75,  rang: (x)=> x >  39 && x <= 43},
-        {perc:90,  rang: (x)=> x >  43 && x <= 47},
-        {perc:99,  rang: (x)=> x >  47 && x <= 53},
-        {perc:100, rang: (x)=> x >  53 && x <= 60}
-      ]}
+        {perc:1,   rang: (x)=> x            <= 14, diag: "Deficient", rank:"V"             },
+        {perc:10,  rang: (x)=> x >  14 && x <= 24, diag: "Lower than average", rank:"IV"   },
+        {perc:25,  rang: (x)=> x >  24 && x <= 33, diag: "Lower than average", rank:"IV+"  },
+        {perc:50,  rang: (x)=> x >  33 && x <= 39, diag: "Average", rank:"III"             },
+        {perc:75,  rang: (x)=> x >  39 && x <= 43, diag: "Higher than average", rank:"II"  },
+        {perc:90,  rang: (x)=> x >  43 && x <= 47, diag: "Higher than average", rank:"II+" },
+        {perc:99,  rang: (x)=> x >  47 && x <= 53, diag: "Superior", rank:"I"              },
+        {perc:100, rang: (x)=> x >  53 && x <= 60, diag: "Superior", rank:"I"              }
+      ]},
+      //Ages 13-14
+      {age_group: (x)=> x == 13 || x == 14, scores:[
+        {perc:1,   rang: (x)=> x            <= 17, diag: "Deficient", rank:"V"            },
+        {perc:10,  rang: (x)=> x >  17 && x <= 27, diag: "Lower than average", rank:"IV"  },
+        {perc:25,  rang: (x)=> x >  27 && x <= 34, diag: "Lower than average", rank:"IV+" },
+        {perc:50,  rang: (x)=> x >  34 && x <= 40, diag: "Average", rank:"III"            },
+        {perc:75,  rang: (x)=> x >  40 && x <= 45, diag: "Higher than average", rank:"II" },
+        {perc:90,  rang: (x)=> x >  45 && x <= 49, diag: "Higher than average", rank:"II+"},
+        {perc:99,  rang: (x)=> x >  49 && x <= 54, diag: "Superior", rank:"I"             },
+        {perc:100, rang: (x)=> x >  54 && x <= 60, diag: "Superior", rank:"I"             }
+      ]},
+      //Ages 15-16
+      {age_group: (x)=> x == 15 || x == 16, scores:[
+        {perc:1,   rang: (x)=> x            <= 19, diag: "Deficient", rank:"V"            },
+        {perc:10,  rang: (x)=> x >  19 && x <= 29, diag: "Lower than average", rank:"IV"  },
+        {perc:25,  rang: (x)=> x >  29 && x <= 35, diag: "Lower than average", rank:"IV+" },
+        {perc:50,  rang: (x)=> x >  35 && x <= 41, diag: "Average", rank:"III"            },
+        {perc:75,  rang: (x)=> x >  41 && x <= 46, diag: "Higher than average", rank:"II" },
+        {perc:90,  rang: (x)=> x >  46 && x <= 50, diag: "Higher than average", rank:"II+"},
+        {perc:99,  rang: (x)=> x >  50 && x <= 55, diag: "Superior", rank:"I"             },
+        {perc:100, rang: (x)=> x >  55 && x <= 60, diag: "Superior", rank:"I"             }
+      ]},
+      {age_group: (x)=> x == 17, scores:[
+        {perc:1,   rang: (x)=> x            <= 28, diag: "Deficient", rank:"V"            },
+        {perc:10,  rang: (x)=> x >  28 && x <= 35, diag: "Lower than average", rank:"IV"  },
+        {perc:25,  rang: (x)=> x >  35 && x <= 39, diag: "Lower than average", rank:"IV+" },
+        {perc:50,  rang: (x)=> x >  39 && x <= 45, diag: "Average", rank:"III"            },
+        {perc:75,  rang: (x)=> x >  45 && x <= 49, diag: "Higher than average", rank:"II" },
+        {perc:90,  rang: (x)=> x >  49 && x <= 52, diag: "Higher than average", rank:"II+"},
+        {perc:99,  rang: (x)=> x >  52 && x <= 56, diag: "Superior", rank:"I"             },
+        {perc:100, rang: (x)=> x >  56 && x <= 60, diag: "Superior", rank:"I"             }
+      ]},
+      {age_group: (x)=> x == 18, scores:[
+        {perc:1,   rang: (x)=> x            <= 29, diag: "Deficient", rank:"V"            },
+        {perc:10,  rang: (x)=> x >  29 && x <= 36, diag: "Lower than average", rank:"IV"  },
+        {perc:25,  rang: (x)=> x >  36 && x <= 42, diag: "Lower than average", rank:"IV+" },
+        {perc:50,  rang: (x)=> x >  42 && x <= 46, diag: "Average", rank:"III"            },
+        {perc:75,  rang: (x)=> x >  46 && x <= 50, diag: "Higher than average", rank:"II" },
+        {perc:90,  rang: (x)=> x >  50 && x <= 53, diag: "Higher than average", rank:"II+"},
+        {perc:99,  rang: (x)=> x >  53 && x <= 57, diag: "Superior", rank:"I"             },
+        {perc:100, rang: (x)=> x >  57 && x <= 60, diag: "Superior", rank:"I"             }
+      ]},
+      {age_group: (x)=> x == 19, scores:[
+        {perc:1,   rang: (x)=> x            <= 30, diag: "Deficient", rank:"V"            },
+        {perc:10,  rang: (x)=> x >  30 && x <= 37, diag: "Lower than average", rank:"IV"  },
+        {perc:25,  rang: (x)=> x >  37 && x <= 43, diag: "Lower than average", rank:"IV+" },
+        {perc:50,  rang: (x)=> x >  43 && x <= 47, diag: "Average", rank:"III"            },
+        {perc:75,  rang: (x)=> x >  47 && x <= 51, diag: "Higher than average", rank:"II" },
+        {perc:90,  rang: (x)=> x >  51 && x <= 54, diag: "Higher than average", rank:"II+"},
+        {perc:99,  rang: (x)=> x >  54 && x <= 57, diag: "Superior", rank:"I"             },
+        {perc:100, rang: (x)=> x >  57 && x <= 60, diag: "Superior", rank:"I"             }
+      ]},
+      {age_group: (x)=> x == 20 || x == 21, scores:[
+        {perc:1,   rang: (x)=> x            <= 30, diag: "Deficient", rank:"V"            },
+        {perc:10,  rang: (x)=> x >  30 && x <= 37, diag: "Lower than average", rank:"IV"  },
+        {perc:25,  rang: (x)=> x >  37 && x <= 43, diag: "Lower than average", rank:"IV+" },
+        {perc:50,  rang: (x)=> x >  43 && x <= 47, diag: "Average", rank:"III"            },
+        {perc:75,  rang: (x)=> x >  47 && x <= 51, diag: "Higher than average", rank:"II" },
+        {perc:90,  rang: (x)=> x >  51 && x <= 54, diag: "Higher than average", rank:"II+"},
+        {perc:99,  rang: (x)=> x >  54 && x <= 58, diag: "Superior", rank:"I"             },
+        {perc:100, rang: (x)=> x >  58 && x <= 60, diag: "Superior", rank:"I"             }
+      ]},
+      {age_group: (x)=> x >= 22 && x <= 65, scores:[
+        {perc:1,   rang: (x)=> x            <= 31, diag: "Deficient", rank:"V"            },
+        {perc:10,  rang: (x)=> x >  31 && x <= 38, diag: "Lower than average", rank:"IV"  },
+        {perc:25,  rang: (x)=> x >  38 && x <= 44, diag: "Lower than average", rank:"IV+" },
+        {perc:50,  rang: (x)=> x >  44 && x <= 48, diag: "Average", rank:"III"            },
+        {perc:75,  rang: (x)=> x >  48 && x <= 52, diag: "Higher than average", rank:"II" },
+        {perc:90,  rang: (x)=> x >  52 && x <= 55, diag: "Higher than average", rank:"II+"},
+        {perc:99,  rang: (x)=> x >  55 && x <= 59, diag: "Superior", rank:"I"             },
+        {perc:100, rang: (x)=> x >  59 && x <= 60, diag: "Superior", rank:"I"             }
+      ]},
     ]
 
     for (let each of age_score){
-      // console.log("age is" + age)
-      // console.log(each.age_group.has(parseInt(age)))
       if (each.age_group(parseInt(age))){
         for (let score of each.scores){
           if (score.rang(total)){
-            console.log("scored:" + score.perc)
+            return score;
           }
         }
       }
@@ -226,9 +297,9 @@ function Form( {source, age} ){
     }
 
     // insert here percentile table
-    percentile(total, age)
+    const results = percentile(total, age)
 
-    setSelectedOptions({...selectedOptions, score:total, completed:true })
+    setSelectedOptions({...selectedOptions, score:total, completed:true, results:results})
   }
 
     function formHandling(question){
@@ -284,7 +355,7 @@ function Form( {source, age} ){
           </>}
         </div>
 
-          <p className="navbar-item text-white navbar-brand"> Score: {selectedOptions.score} Age: {age}</p>
+          <p className="navbar-item text-white navbar-brand"> Score: {selectedOptions.score} Age: {age} Diagnostic: {selectedOptions.results.diag} Rank: {selectedOptions.results.rank}</p>
           </div>
       </nav>
     </>
