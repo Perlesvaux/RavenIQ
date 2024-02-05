@@ -161,24 +161,10 @@ return (
 function Form( {source, age} ){
   
 
-  const [selectedOptions, setSelectedOptions] = useState({proceed: false, score:0, completed:false, results: {diag:"pending", rank:"pending"}});
+  const [selectedOptions, setSelectedOptions] = useState({proceed: false, score:0, completed:false });
   const confirm = useRef()
-  // const [timer, setTimer] = useState(10)
   function percentile(total, age){
-    // const age_score = [
-    //   {age_group: new Set([12]), scores:[
-    //     {perc:1,  rang: new Set([1,2,3,4,5,6,7,8,9,10,11,12,13,14])},
-    //     {perc:10, rang: new Set([15,16,17,18,19,20,21,22,23,24])},
-    //     {perc:25, rang: new Set([25,26,27,28,29,30,31,32,33])},
-    //     {perc:50, rang: new Set([34,35,36,37,38, 39])},
-    //     {perc:51, rang: new Set([40, 41, 42])},
-    //     {perc:75, rang: new Set([43, 44, 45, 46])},
-    //     {perc:90, rang: new Set([47, 48, 50, 51, 52])},
-    //     {perc:99, rang: new Set([53, 54, 55, 56, 57, 58, 59, 60])}
-    //   ]}
-    // ]
     const age_score = [
-      //Ages 1-12
       {age_group: (x)=> x <= 12, scores:[
         {perc:1,   rang: (x)=> x            <= 14, diag: "Deficient", rank:"V"             },
         {perc:10,  rang: (x)=> x >  14 && x <= 24, diag: "Lower than average", rank:"IV"   },
@@ -189,7 +175,6 @@ function Form( {source, age} ){
         {perc:99,  rang: (x)=> x >  47 && x <= 53, diag: "Superior", rank:"I"              },
         {perc:100, rang: (x)=> x >  53 && x <= 60, diag: "Superior", rank:"I"              }
       ]},
-      //Ages 13-14
       {age_group: (x)=> x == 13 || x == 14, scores:[
         {perc:1,   rang: (x)=> x            <= 17, diag: "Deficient", rank:"V"            },
         {perc:10,  rang: (x)=> x >  17 && x <= 27, diag: "Lower than average", rank:"IV"  },
@@ -200,7 +185,6 @@ function Form( {source, age} ){
         {perc:99,  rang: (x)=> x >  49 && x <= 54, diag: "Superior", rank:"I"             },
         {perc:100, rang: (x)=> x >  54 && x <= 60, diag: "Superior", rank:"I"             }
       ]},
-      //Ages 15-16
       {age_group: (x)=> x == 15 || x == 16, scores:[
         {perc:1,   rang: (x)=> x            <= 19, diag: "Deficient", rank:"V"            },
         {perc:10,  rang: (x)=> x >  19 && x <= 29, diag: "Lower than average", rank:"IV"  },
@@ -312,54 +296,64 @@ function Form( {source, age} ){
   }
 
 
- return (
-    <>
+ return (<>
+{selectedOptions.results?
+<div className="card text-dark bg-light mb-3" style={{maxWidth: "18em", margin:"auto"}}>
+  <div className="card-header">Results</div>
+  <div className="card-body">
+  <h5  className="card-title">Age:</h5>
+  <p   className="card-text">{age}</p>
+  <h5  className="card-title">Score:</h5>
+  <p   className="card-text">{selectedOptions.score}/60</p>
+  <h5  className="card-title">Diagnostic:</h5>
+  <p   className="card-text">{selectedOptions.results.diag} {selectedOptions.results.rank}</p>
+  </div>
+</div>
+:
+<>
+  <form onSubmit={submit} >
 
-      <form onSubmit={submit} >
+    <div style={flex_box}>
+    {source.map((question) => (
+      <Item
+        key={question.N}
+        source={question}
+        selecting={formHandling}
+        userResponse={selectedOptions}
+      />
+    ))}
+    </div>
 
-        <div style={flex_box}>
-        {source.map((question) => (
-          <Item
-            key={question.N}
-            source={question}
-            selecting={formHandling}
-            userResponse={selectedOptions}
-          />
-        ))}
+    <button type="submit"  ref={confirm} style={{display:"none"}}>alt</button>
+  </form>
+</>}
+
+    <nav className="navbar fixed-bottom navbar-dark bg-dark" style={{height:"4em"}}>
+
+      <div className="d-flex justify-content-evenly w-100">
+      <div className="navbar-item">  
+        <CountdownTimer initialSeconds={10} timeout={submitForm} waitFor={selectedOptions.completed}  />
+      </div>
+
+      <div className="navbar-item" style={flex_box}>  
+      {selectedOptions.completed? <></> :
+        <>
+        
+        {selectedOptions.proceed? 
+            <>
+              <button className="btn btn-success" onClick={submitForm}>Confirm submission</button> 
+              <button className="btn btn-danger" onClick={toggleWarning}>Not yet</button>
+            </>
+              : 
+              <button className="btn btn-primary" onClick={toggleWarning}>Complete Quiz!</button>}
+        </>}
+      </div>
+
+        <p className="navbar-item text-white navbar-brand"> (Testee's Age: {age}) </p>
         </div>
-
-        <button type="submit"  ref={confirm} style={{display:"none"}}>alt</button>
-      </form>
-
-      <nav className="navbar fixed-bottom navbar-dark bg-dark" style={{height:"4em"}}>
-
-
-        <div className="d-flex justify-content-evenly w-100">
-        <div className="navbar-item">  
-          <CountdownTimer initialSeconds={10} timeout={submitForm} waitFor={selectedOptions.completed}  />
-        </div>
-
-        <div className="navbar-item" style={flex_box}>  
-        {selectedOptions.completed? <>ok</> :
-          <>
-          
-          {selectedOptions.proceed? 
-              <>
-                <button className="btn btn-success" onClick={submitForm}>Confirm submission</button> 
-                <button className="btn btn-danger" onClick={toggleWarning}>Not yet</button>
-              </>
-                : 
-                <button className="btn btn-primary" onClick={toggleWarning}>Complete Quiz!</button>}
-
-
-          </>}
-        </div>
-
-          <p className="navbar-item text-white navbar-brand"> Score: {selectedOptions.score} Age: {age} Diagnostic: {selectedOptions.results.diag} Rank: {selectedOptions.results.rank}</p>
-          </div>
-      </nav>
-    </>
-  );}
+    </nav>
+  </>
+);}
 
 
 
