@@ -164,6 +164,47 @@ function Form( {source, age} ){
   const [selectedOptions, setSelectedOptions] = useState({proceed: false, score:0, completed:false});
   const confirm = useRef()
   // const [timer, setTimer] = useState(10)
+  function percentile(total, age){
+    // const age_score = [
+    //   {age_group: new Set([12]), scores:[
+    //     {perc:1,  rang: new Set([1,2,3,4,5,6,7,8,9,10,11,12,13,14])},
+    //     {perc:10, rang: new Set([15,16,17,18,19,20,21,22,23,24])},
+    //     {perc:25, rang: new Set([25,26,27,28,29,30,31,32,33])},
+    //     {perc:50, rang: new Set([34,35,36,37,38, 39])},
+    //     {perc:51, rang: new Set([40, 41, 42])},
+    //     {perc:75, rang: new Set([43, 44, 45, 46])},
+    //     {perc:90, rang: new Set([47, 48, 50, 51, 52])},
+    //     {perc:99, rang: new Set([53, 54, 55, 56, 57, 58, 59, 60])}
+    //   ]}
+    // ]
+    const age_score = [
+      {age_group: (x)=> x <= 12, scores:[
+        {perc:1,   rang: (x)=> x            <= 14},
+        {perc:10,  rang: (x)=> x >  14 && x <= 24},
+        {perc:25,  rang: (x)=> x >  24 && x <= 33},
+        {perc:50,  rang: (x)=> x >  33 && x <= 39},
+        {perc:75,  rang: (x)=> x >  39 && x <= 43},
+        {perc:90,  rang: (x)=> x >  43 && x <= 47},
+        {perc:99,  rang: (x)=> x >  47 && x <= 53},
+        {perc:100, rang: (x)=> x >  53 && x <= 60}
+      ]}
+    ]
+
+    for (let each of age_score){
+      // console.log("age is" + age)
+      // console.log(each.age_group.has(parseInt(age)))
+      if (each.age_group(parseInt(age))){
+        for (let score of each.scores){
+          if (score.rang(total)){
+            console.log("scored:" + score.perc)
+          }
+        }
+      }
+    }
+    
+    
+    
+  }
 
   function submitForm(){
     confirm.current.click();
@@ -172,6 +213,9 @@ function Form( {source, age} ){
   function submit(e){
     e.preventDefault();
 
+    //Evaluation takes place here!
+
+    //First, let's compute the total
     let total = 0;
     for(let each of source){
       const correctAnswer  = each.A;
@@ -180,6 +224,9 @@ function Form( {source, age} ){
         total+=1;
       }
     }
+
+    // insert here percentile table
+    percentile(total, age)
 
     setSelectedOptions({...selectedOptions, score:total, completed:true })
   }
