@@ -334,7 +334,7 @@ function Form( {source, age, age_score, toggler} ){
 
       <div className="d-flex justify-content-evenly w-100">
       <div className="navbar-item">  
-        <CountdownTimer initialSeconds={10} timeout={submitForm} waitFor={selectedOptions.completed}  />
+        <CountdownTimer initialSeconds={45*60+2} timeout={submitForm} waitFor={selectedOptions.completed}  />
       </div>
 
       <div className="navbar-item" style={flex_box}>  
