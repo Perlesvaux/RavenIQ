@@ -78,6 +78,91 @@ const S = [
   {N:"E12", Q:"./Q/E12.png", A:"5", O:[{index:1, sprite:"./O/E12_1.png"},{index:2, sprite:"./O/E12_2.png"},{index:3, sprite:"./O/E12_3.png"},{index:4, sprite:"./O/E12_4.png"},{index:5, sprite:"./O/E12_5.png"},{index:6, sprite:"./O/E12_6.png"}, {index:7, sprite:"./O/E12_7.png"}, {index:8, sprite:"./O/E12_8.png"}]},
 ]
 
+
+const age_score = [
+  {age_group: (x)=> x <= 12, scores:[
+    {perc:1,   rang: (x)=> x            <= 14, diag: "Deficient", rank:"V"             },
+    {perc:10,  rang: (x)=> x >  14 && x <= 24, diag: "Lower than average", rank:"IV"   },
+    {perc:25,  rang: (x)=> x >  24 && x <= 33, diag: "Lower than average", rank:"IV+"  },
+    {perc:50,  rang: (x)=> x >  33 && x <= 39, diag: "Average", rank:"III"             },
+    {perc:75,  rang: (x)=> x >  39 && x <= 43, diag: "Higher than average", rank:"II"  },
+    {perc:90,  rang: (x)=> x >  43 && x <= 47, diag: "Higher than average", rank:"II+" },
+    {perc:99,  rang: (x)=> x >  47 && x <= 53, diag: "Superior", rank:"I"              },
+    {perc:100, rang: (x)=> x >  53 && x <= 60, diag: "Superior", rank:"I"              }
+  ]},
+  {age_group: (x)=> x == 13 || x == 14, scores:[
+    {perc:1,   rang: (x)=> x            <= 17, diag: "Deficient", rank:"V"            },
+    {perc:10,  rang: (x)=> x >  17 && x <= 27, diag: "Lower than average", rank:"IV"  },
+    {perc:25,  rang: (x)=> x >  27 && x <= 34, diag: "Lower than average", rank:"IV+" },
+    {perc:50,  rang: (x)=> x >  34 && x <= 40, diag: "Average", rank:"III"            },
+    {perc:75,  rang: (x)=> x >  40 && x <= 45, diag: "Higher than average", rank:"II" },
+    {perc:90,  rang: (x)=> x >  45 && x <= 49, diag: "Higher than average", rank:"II+"},
+    {perc:99,  rang: (x)=> x >  49 && x <= 54, diag: "Superior", rank:"I"             },
+    {perc:100, rang: (x)=> x >  54 && x <= 60, diag: "Superior", rank:"I"             }
+  ]},
+  {age_group: (x)=> x == 15 || x == 16, scores:[
+    {perc:1,   rang: (x)=> x            <= 19, diag: "Deficient", rank:"V"            },
+    {perc:10,  rang: (x)=> x >  19 && x <= 29, diag: "Lower than average", rank:"IV"  },
+    {perc:25,  rang: (x)=> x >  29 && x <= 35, diag: "Lower than average", rank:"IV+" },
+    {perc:50,  rang: (x)=> x >  35 && x <= 41, diag: "Average", rank:"III"            },
+    {perc:75,  rang: (x)=> x >  41 && x <= 46, diag: "Higher than average", rank:"II" },
+    {perc:90,  rang: (x)=> x >  46 && x <= 50, diag: "Higher than average", rank:"II+"},
+    {perc:99,  rang: (x)=> x >  50 && x <= 55, diag: "Superior", rank:"I"             },
+    {perc:100, rang: (x)=> x >  55 && x <= 60, diag: "Superior", rank:"I"             }
+  ]},
+  {age_group: (x)=> x == 17, scores:[
+    {perc:1,   rang: (x)=> x            <= 28, diag: "Deficient", rank:"V"            },
+    {perc:10,  rang: (x)=> x >  28 && x <= 35, diag: "Lower than average", rank:"IV"  },
+    {perc:25,  rang: (x)=> x >  35 && x <= 39, diag: "Lower than average", rank:"IV+" },
+    {perc:50,  rang: (x)=> x >  39 && x <= 45, diag: "Average", rank:"III"            },
+    {perc:75,  rang: (x)=> x >  45 && x <= 49, diag: "Higher than average", rank:"II" },
+    {perc:90,  rang: (x)=> x >  49 && x <= 52, diag: "Higher than average", rank:"II+"},
+    {perc:99,  rang: (x)=> x >  52 && x <= 56, diag: "Superior", rank:"I"             },
+    {perc:100, rang: (x)=> x >  56 && x <= 60, diag: "Superior", rank:"I"             }
+  ]},
+  {age_group: (x)=> x == 18, scores:[
+    {perc:1,   rang: (x)=> x            <= 29, diag: "Deficient", rank:"V"            },
+    {perc:10,  rang: (x)=> x >  29 && x <= 36, diag: "Lower than average", rank:"IV"  },
+    {perc:25,  rang: (x)=> x >  36 && x <= 42, diag: "Lower than average", rank:"IV+" },
+    {perc:50,  rang: (x)=> x >  42 && x <= 46, diag: "Average", rank:"III"            },
+    {perc:75,  rang: (x)=> x >  46 && x <= 50, diag: "Higher than average", rank:"II" },
+    {perc:90,  rang: (x)=> x >  50 && x <= 53, diag: "Higher than average", rank:"II+"},
+    {perc:99,  rang: (x)=> x >  53 && x <= 57, diag: "Superior", rank:"I"             },
+    {perc:100, rang: (x)=> x >  57 && x <= 60, diag: "Superior", rank:"I"             }
+  ]},
+  {age_group: (x)=> x == 19, scores:[
+    {perc:1,   rang: (x)=> x            <= 30, diag: "Deficient", rank:"V"            },
+    {perc:10,  rang: (x)=> x >  30 && x <= 37, diag: "Lower than average", rank:"IV"  },
+    {perc:25,  rang: (x)=> x >  37 && x <= 43, diag: "Lower than average", rank:"IV+" },
+    {perc:50,  rang: (x)=> x >  43 && x <= 47, diag: "Average", rank:"III"            },
+    {perc:75,  rang: (x)=> x >  47 && x <= 51, diag: "Higher than average", rank:"II" },
+    {perc:90,  rang: (x)=> x >  51 && x <= 54, diag: "Higher than average", rank:"II+"},
+    {perc:99,  rang: (x)=> x >  54 && x <= 57, diag: "Superior", rank:"I"             },
+    {perc:100, rang: (x)=> x >  57 && x <= 60, diag: "Superior", rank:"I"             }
+  ]},
+  {age_group: (x)=> x == 20 || x == 21, scores:[
+    {perc:1,   rang: (x)=> x            <= 30, diag: "Deficient", rank:"V"            },
+    {perc:10,  rang: (x)=> x >  30 && x <= 37, diag: "Lower than average", rank:"IV"  },
+    {perc:25,  rang: (x)=> x >  37 && x <= 43, diag: "Lower than average", rank:"IV+" },
+    {perc:50,  rang: (x)=> x >  43 && x <= 47, diag: "Average", rank:"III"            },
+    {perc:75,  rang: (x)=> x >  47 && x <= 51, diag: "Higher than average", rank:"II" },
+    {perc:90,  rang: (x)=> x >  51 && x <= 54, diag: "Higher than average", rank:"II+"},
+    {perc:99,  rang: (x)=> x >  54 && x <= 58, diag: "Superior", rank:"I"             },
+    {perc:100, rang: (x)=> x >  58 && x <= 60, diag: "Superior", rank:"I"             }
+  ]},
+  {age_group: (x)=> x >= 22 && x <= 65, scores:[
+    {perc:1,   rang: (x)=> x            <= 31, diag: "Deficient", rank:"V"            },
+    {perc:10,  rang: (x)=> x >  31 && x <= 38, diag: "Lower than average", rank:"IV"  },
+    {perc:25,  rang: (x)=> x >  38 && x <= 44, diag: "Lower than average", rank:"IV+" },
+    {perc:50,  rang: (x)=> x >  44 && x <= 48, diag: "Average", rank:"III"            },
+    {perc:75,  rang: (x)=> x >  48 && x <= 52, diag: "Higher than average", rank:"II" },
+    {perc:90,  rang: (x)=> x >  52 && x <= 55, diag: "Higher than average", rank:"II+"},
+    {perc:99,  rang: (x)=> x >  55 && x <= 59, diag: "Superior", rank:"I"             },
+    {perc:100, rang: (x)=> x >  59 && x <= 60, diag: "Superior", rank:"I"             }
+  ]},
+]
+
+
 //Styles
 const grid_container = {display: "grid", gridTemplateColumns: "auto auto auto", padding: "10px"}
 const option_image = {width:"8em", height:"5em"}
@@ -146,8 +231,6 @@ const formatTime = (timeInSeconds) => {
   return `${minutes}:${seconds}`;
 };
 
-const sticky = { position: "sticky", top: "20px"}
-
 return (
     <>
       <p className="navbar-brand">{formatTime(seconds)}</p>
@@ -158,95 +241,12 @@ return (
 
 
 
-function Form( {source, age} ){
+function Form( {source, age, age_score, toggler} ){
   
 
   const [selectedOptions, setSelectedOptions] = useState({proceed: false, score:0, completed:false });
   const confirm = useRef()
-  function percentile(total, age){
-    const age_score = [
-      {age_group: (x)=> x <= 12, scores:[
-        {perc:1,   rang: (x)=> x            <= 14, diag: "Deficient", rank:"V"             },
-        {perc:10,  rang: (x)=> x >  14 && x <= 24, diag: "Lower than average", rank:"IV"   },
-        {perc:25,  rang: (x)=> x >  24 && x <= 33, diag: "Lower than average", rank:"IV+"  },
-        {perc:50,  rang: (x)=> x >  33 && x <= 39, diag: "Average", rank:"III"             },
-        {perc:75,  rang: (x)=> x >  39 && x <= 43, diag: "Higher than average", rank:"II"  },
-        {perc:90,  rang: (x)=> x >  43 && x <= 47, diag: "Higher than average", rank:"II+" },
-        {perc:99,  rang: (x)=> x >  47 && x <= 53, diag: "Superior", rank:"I"              },
-        {perc:100, rang: (x)=> x >  53 && x <= 60, diag: "Superior", rank:"I"              }
-      ]},
-      {age_group: (x)=> x == 13 || x == 14, scores:[
-        {perc:1,   rang: (x)=> x            <= 17, diag: "Deficient", rank:"V"            },
-        {perc:10,  rang: (x)=> x >  17 && x <= 27, diag: "Lower than average", rank:"IV"  },
-        {perc:25,  rang: (x)=> x >  27 && x <= 34, diag: "Lower than average", rank:"IV+" },
-        {perc:50,  rang: (x)=> x >  34 && x <= 40, diag: "Average", rank:"III"            },
-        {perc:75,  rang: (x)=> x >  40 && x <= 45, diag: "Higher than average", rank:"II" },
-        {perc:90,  rang: (x)=> x >  45 && x <= 49, diag: "Higher than average", rank:"II+"},
-        {perc:99,  rang: (x)=> x >  49 && x <= 54, diag: "Superior", rank:"I"             },
-        {perc:100, rang: (x)=> x >  54 && x <= 60, diag: "Superior", rank:"I"             }
-      ]},
-      {age_group: (x)=> x == 15 || x == 16, scores:[
-        {perc:1,   rang: (x)=> x            <= 19, diag: "Deficient", rank:"V"            },
-        {perc:10,  rang: (x)=> x >  19 && x <= 29, diag: "Lower than average", rank:"IV"  },
-        {perc:25,  rang: (x)=> x >  29 && x <= 35, diag: "Lower than average", rank:"IV+" },
-        {perc:50,  rang: (x)=> x >  35 && x <= 41, diag: "Average", rank:"III"            },
-        {perc:75,  rang: (x)=> x >  41 && x <= 46, diag: "Higher than average", rank:"II" },
-        {perc:90,  rang: (x)=> x >  46 && x <= 50, diag: "Higher than average", rank:"II+"},
-        {perc:99,  rang: (x)=> x >  50 && x <= 55, diag: "Superior", rank:"I"             },
-        {perc:100, rang: (x)=> x >  55 && x <= 60, diag: "Superior", rank:"I"             }
-      ]},
-      {age_group: (x)=> x == 17, scores:[
-        {perc:1,   rang: (x)=> x            <= 28, diag: "Deficient", rank:"V"            },
-        {perc:10,  rang: (x)=> x >  28 && x <= 35, diag: "Lower than average", rank:"IV"  },
-        {perc:25,  rang: (x)=> x >  35 && x <= 39, diag: "Lower than average", rank:"IV+" },
-        {perc:50,  rang: (x)=> x >  39 && x <= 45, diag: "Average", rank:"III"            },
-        {perc:75,  rang: (x)=> x >  45 && x <= 49, diag: "Higher than average", rank:"II" },
-        {perc:90,  rang: (x)=> x >  49 && x <= 52, diag: "Higher than average", rank:"II+"},
-        {perc:99,  rang: (x)=> x >  52 && x <= 56, diag: "Superior", rank:"I"             },
-        {perc:100, rang: (x)=> x >  56 && x <= 60, diag: "Superior", rank:"I"             }
-      ]},
-      {age_group: (x)=> x == 18, scores:[
-        {perc:1,   rang: (x)=> x            <= 29, diag: "Deficient", rank:"V"            },
-        {perc:10,  rang: (x)=> x >  29 && x <= 36, diag: "Lower than average", rank:"IV"  },
-        {perc:25,  rang: (x)=> x >  36 && x <= 42, diag: "Lower than average", rank:"IV+" },
-        {perc:50,  rang: (x)=> x >  42 && x <= 46, diag: "Average", rank:"III"            },
-        {perc:75,  rang: (x)=> x >  46 && x <= 50, diag: "Higher than average", rank:"II" },
-        {perc:90,  rang: (x)=> x >  50 && x <= 53, diag: "Higher than average", rank:"II+"},
-        {perc:99,  rang: (x)=> x >  53 && x <= 57, diag: "Superior", rank:"I"             },
-        {perc:100, rang: (x)=> x >  57 && x <= 60, diag: "Superior", rank:"I"             }
-      ]},
-      {age_group: (x)=> x == 19, scores:[
-        {perc:1,   rang: (x)=> x            <= 30, diag: "Deficient", rank:"V"            },
-        {perc:10,  rang: (x)=> x >  30 && x <= 37, diag: "Lower than average", rank:"IV"  },
-        {perc:25,  rang: (x)=> x >  37 && x <= 43, diag: "Lower than average", rank:"IV+" },
-        {perc:50,  rang: (x)=> x >  43 && x <= 47, diag: "Average", rank:"III"            },
-        {perc:75,  rang: (x)=> x >  47 && x <= 51, diag: "Higher than average", rank:"II" },
-        {perc:90,  rang: (x)=> x >  51 && x <= 54, diag: "Higher than average", rank:"II+"},
-        {perc:99,  rang: (x)=> x >  54 && x <= 57, diag: "Superior", rank:"I"             },
-        {perc:100, rang: (x)=> x >  57 && x <= 60, diag: "Superior", rank:"I"             }
-      ]},
-      {age_group: (x)=> x == 20 || x == 21, scores:[
-        {perc:1,   rang: (x)=> x            <= 30, diag: "Deficient", rank:"V"            },
-        {perc:10,  rang: (x)=> x >  30 && x <= 37, diag: "Lower than average", rank:"IV"  },
-        {perc:25,  rang: (x)=> x >  37 && x <= 43, diag: "Lower than average", rank:"IV+" },
-        {perc:50,  rang: (x)=> x >  43 && x <= 47, diag: "Average", rank:"III"            },
-        {perc:75,  rang: (x)=> x >  47 && x <= 51, diag: "Higher than average", rank:"II" },
-        {perc:90,  rang: (x)=> x >  51 && x <= 54, diag: "Higher than average", rank:"II+"},
-        {perc:99,  rang: (x)=> x >  54 && x <= 58, diag: "Superior", rank:"I"             },
-        {perc:100, rang: (x)=> x >  58 && x <= 60, diag: "Superior", rank:"I"             }
-      ]},
-      {age_group: (x)=> x >= 22 && x <= 65, scores:[
-        {perc:1,   rang: (x)=> x            <= 31, diag: "Deficient", rank:"V"            },
-        {perc:10,  rang: (x)=> x >  31 && x <= 38, diag: "Lower than average", rank:"IV"  },
-        {perc:25,  rang: (x)=> x >  38 && x <= 44, diag: "Lower than average", rank:"IV+" },
-        {perc:50,  rang: (x)=> x >  44 && x <= 48, diag: "Average", rank:"III"            },
-        {perc:75,  rang: (x)=> x >  48 && x <= 52, diag: "Higher than average", rank:"II" },
-        {perc:90,  rang: (x)=> x >  52 && x <= 55, diag: "Higher than average", rank:"II+"},
-        {perc:99,  rang: (x)=> x >  55 && x <= 59, diag: "Superior", rank:"I"             },
-        {perc:100, rang: (x)=> x >  59 && x <= 60, diag: "Superior", rank:"I"             }
-      ]},
-    ]
-
+  function percentile(total, age, age_score){
     for (let each of age_score){
       if (each.age_group(parseInt(age))){
         for (let score of each.scores){
@@ -256,13 +256,10 @@ function Form( {source, age} ){
         }
       }
     }
-    
-    
-    
   }
 
   function submitForm(){
-    confirm.current.click();
+    if (!selectedOptions.results) confirm.current.requestSubmit();
   }
 
   function submit(e){
@@ -281,7 +278,7 @@ function Form( {source, age} ){
     }
 
     // insert here percentile table
-    const results = percentile(total, age)
+    const results = percentile(total, age, age_score)
 
     setSelectedOptions({...selectedOptions, score:total, completed:true, results:results})
   }
@@ -293,6 +290,11 @@ function Form( {source, age} ){
 
   function toggleWarning(){
     setSelectedOptions({...selectedOptions, proceed:!selectedOptions.proceed})
+  }
+
+  function formReset(){
+    toggler()
+    setSelectedOptions({proceed: false, score:0, completed:false })
   }
 
 
@@ -308,10 +310,11 @@ function Form( {source, age} ){
   <h5  className="card-title">Diagnostic:</h5>
   <p   className="card-text">{selectedOptions.results.diag} {selectedOptions.results.rank}</p>
   </div>
+  <button className="btn btn-secondary" onClick={formReset}> Retry Quiz </button>
 </div>
 :
 <>
-  <form onSubmit={submit} >
+  <form onSubmit={submit} ref={confirm} >
 
     <div style={flex_box}>
     {source.map((question) => (
@@ -324,7 +327,6 @@ function Form( {source, age} ){
     ))}
     </div>
 
-    <button type="submit"  ref={confirm} style={{display:"none"}}>alt</button>
   </form>
 </>}
 
@@ -349,13 +351,11 @@ function Form( {source, age} ){
         </>}
       </div>
 
-        <p className="navbar-item text-white navbar-brand"> (Testee's Age: {age}) </p>
+        <p className="navbar-item text-white navbar-brand"> (Age: {age}) </p>
         </div>
     </nav>
   </>
 );}
-
-
 
 
 
@@ -373,21 +373,26 @@ function App() {
 return (
   <>
     {initial.isReady?
-      <Form source={S} age={initial.age} />:
-      <>
-        <h1>Test will begin. Instructions:...</h1>
+      <Form source={S} age={initial.age} age_score={age_score} toggler={toggling}/>:
+      <div className="card text-white bg-dark ">
+          <div className="card-header">Instructions</div>
+          <div className="card-body">
+            <h5 className="card-title">Raven's Progressive Matrices Test</h5>
+            <p className="card-body">
+          is a nonverbal IQ test that assesses your abstract reasoning skills and general intelligence. On this test, you must identify shape matrices' patterns and select the missing shape. You'll be given 45min to resolve 60 items.
+            </p>
+          </div>
+
         <form>
-        <button  type="submit" onClick={toggling}>Begin Test</button>
-          <input type="number" onChange={setAge} required/>
+      <div className="d-flex justify-content-evenly w-100">
+
+          <input type="number" className="form-control-lg col-sm-4" placeholder="Insert age here" onChange={setAge} required/>
+        <button  type="submit" className="btn btn-info col-sm-8" onClick={toggling}>Begin Test</button>
+        </div>
         </form>
 
-      </>}
-
-
-
+      </div>}
   </>)}
-
-
 
 
 createRoot(document.getElementById("root")).render(<App />);
