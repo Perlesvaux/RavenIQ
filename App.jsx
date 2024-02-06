@@ -369,18 +369,22 @@ function App() {
     e.preventDefault()
     setInitials({...initial, age:e.target.value})
   }
+  function backToDefaults(){
+    setInitials({isReady:false, age:0})
+  }
 
 return (
   <>
     {initial.isReady?
-      <Form source={S} age={initial.age} age_score={age_score} toggler={toggling}/>:
+      <Form source={S} age={initial.age} age_score={age_score} toggler={backToDefaults}/>:
       <div className="card text-white bg-dark ">
           <div className="card-header">Instructions</div>
           <div className="card-body">
             <h5 className="card-title">Raven's Progressive Matrices Test</h5>
-            <p className="card-body">
-          is a nonverbal IQ test that assesses your abstract reasoning skills and general intelligence. On this test, you must identify shape matrices' patterns and select the missing shape. You'll be given 45min to resolve 60 items.
-            </p>
+            <div className="card-body">
+            <p>This is a nonverbal IQ test that assesses your abstract reasoning skills and general intelligence.</p>
+            <p>You'll be tasked to analyze patterns and select the missing shape. You'll be given 45min to resolve 60 items.</p>
+            </div>
           </div>
 
         <form>
