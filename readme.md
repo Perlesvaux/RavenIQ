@@ -5,5 +5,5 @@ You'll be tasked to analyze patterns and select the missing shape. You'll be giv
 ## Scale
 Montevideo, 2018. Teens & Adults. Ages 12-65.
 
-[App](/monolith.html)
+[App](/App/monolith.html)
 
